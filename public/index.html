@@ -1,89 +1,300 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Camino a la Santidad</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/navegador.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="shortcut icon" href="./images/logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="./css/icofont/icofont.min.css">
+    <link rel="stylesheet" href="./css/about.css">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet"> 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="statusConexion" class="notVisible"><script src="https://scripts.myradiostream.com/s14/30860/status.js"></script></div>
+    <div id="listenersConexion" class="notVisible"><script src="https://scripts.myradiostream.com/s14/30860/listeners.js"></script></div>
+    <div id="musicConexion" class="notVisible"><script src="https://scripts.myradiostream.com/s14/30860/song.js"></script></div>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/9.6.2/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/9.6.2/firebase-auth.js"></script>
-    <script defer src="/__/firebase/9.6.2/firebase-database.js"></script>
-    <script defer src="/__/firebase/9.6.2/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/9.6.2/firebase-functions.js"></script>
-    <script defer src="/__/firebase/9.6.2/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/9.6.2/firebase-storage.js"></script>
-    <script defer src="/__/firebase/9.6.2/firebase-analytics.js"></script>
-    <script defer src="/__/firebase/9.6.2/firebase-remote-config.js"></script>
-    <script defer src="/__/firebase/9.6.2/firebase-performance.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    <div class="loading modal-dialog-centered">
+        <img src="./images/loading.gif" alt="" width="80px">
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
+    <div class="numberListeners">
+        <span class="badge badge-pill badge-danger" id="spanListenerNumber">7</span>
+        <span class="icofont-audio" id="spanListenerIco"></span>
+    </div>
+
+    <header>
+        <div class="logo_innova">
+            <img src="./images/logo.jpeg" alt="">
+        </div>
+        <nav class="navegador">
+            <div class="li-nav" id="home">
+                <a href="#" class="a-nav" id="aNavHome">Inicio</a>
+            </div>
+            <div class="li-nav" id="about">
+                <a href="#" class="a-nav" id="aNavAbout">Acerca de</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-5 mb-5" id="app">
+        <div class="card border-primary" id="contentHome">
+            <div class="card-header text-white bg-info">
+                <div id="status-conexion-text">Fuera del aire</div>
+                <span class="icofont-toggle-off span-status" id="span-stat"></span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title" id="titleMusic">Radio camino a la santidad</h5>
+                <div class="card-body">
+                    <img id="animacion" src="./images/banner.jpeg" alt="" width="50%" style="margin-left: 25%; margin-bottom: 10%; margin-top: 10%;">
+                        <audio id="reproductor" src="" controls style="visibility: hidden;">
+                        <p>Tu navegador no implementa el elemento audio</p>
+                    </audio>
+                </div>
+                <div class="Container-buttons bg-dark p-2">
+                    <button id="cont-play" class="btn btn-outline-primary p-1" type="button">
+                        <span class="icofont-play-alt-1 span-controls"></span>
+                        <span class="span-data">Reproducir</span>
+                    </button>
+                    <button id="cont-pause" class="btn btn btn-outline-primary p-1" type="button">
+                        <span class="icofont-pause span-controls"></span>
+                        <span class="span-data">Pausar</span>
+                    </button>
+                    <button id="cont-stop" class="btn btn btn-outline-primary p-1" type="button">
+                        <span class="icofont-stop span-controls"></span>
+                        <span class="span-data">Detener</span>
+                    </button>
+                    <div class="container-right">
+                        <button id="dis-vol" class="btn btn btn-light p-1" type="button">
+                            <span class="icofont-volume-down span-controls"></span>
+                        </button>
+                        <div class="volumeMovil" id="volumeMovilid">
+                            <div class="barVolume bv10"></div>
+                            <div class="barVolume bv9"></div>
+                            <div class="barVolume bv8"></div>
+                            <div class="barVolume bv7"></div>
+                            <div class="barVolume bv6"></div>
+                            <div class="barVolume bv5"></div>
+                            <div class="barVolume bv4"></div>
+                            <div class="barVolume bv3"></div>
+                            <div class="barVolume bv2"></div>
+                            <div class="barVolume bv1"></div>
+                        </div>
+                        <div class="progress ml-1 mr-1" style="width: 200px; display: inline-block; text-align: left; height: 7px;" id="cont-progress">
+                            <div id="progress" class="progress-bar" role="progressbar" style="width: 100%; display: inline-block; height: 100%; background: #76ff03" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <button id="sub-vol" class="btn btn btn-light p-1" type="button">
+                            <span class="icofont-volume-up span-controls"></span>
+                        </button>
+                        <button id="mute-vol" class="btn btn btn-outline-danger p-1" type="button">
+                            <span class="icofont-ui-mute span-controls"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contentAbout">
+            <div class="container-main">
+                <div class="fondo-main"></div>
+                <div class="capa1">
+                    <div class="title-main">Conoce las horas de transmisión</div>
+                    <table class="tableHorarioMain">
+                        <thead class="headerHorario">
+                            <tr class="fila-header">
+                                <th class="celda-horario">Dia</th>
+                                <th class="celda-horario">Hora de inicio</th>
+                                <th class="celda-horario">Hora de termino</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyHorarioTransmision"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="text-center pt-4 pb-4 font-pacific subtitle">¿Quienes somos?</div>
+            <p class="quienesSomos">
+                Somos una radio cristiana donde se predica la palabra de Dios, y se alaba el nombre de Dios
+            </p>
+            <div class="pl-3 pt-4 pb-4 font-pacific subtitle">Misión</div>
+            <p class="mision">
+                Somos una radio cristiana donde se predica la palabra de Dios, y se alaba el nombre de Dios
+            </p>
+            <div class="text-right pr-4 pt-4 pb-4 font-pacific subtitle">Visión</div>
+            <p class="vision">
+                Somos una radio cristiana donde se predica la palabra de Dios, y se alaba el nombre de Dios
+            </p>
+            <div class="division"></div>
+            <div class="container-main-pe">
+                <div class="fondo-main"></div>
+                <div class="capa1">
+                    <div class="title-main">Programas especiales</div>
+                    <div style="width: 100%; overflow: auto;">
+                        <table class="tableHorarioMain" style="min-width: 950px;">
+                            <thead class="headerHorario">
+                                <tr class="fila-header">
+                                    <th class="celda-horario-pe">Horario</th>
+                                    <th class="celda-horario-pe">Lunes</th>
+                                    <th class="celda-horario-pe">Martes</th>
+                                    <th class="celda-horario-pe">Miercoles</th>
+                                    <th class="celda-horario-pe">Jueves</th>
+                                    <th class="celda-horario-pe">Viernes</th>
+                                    <th class="celda-horario-pe">Sabado</th>
+                                    <th class="celda-horario-pe">Domingo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodyHorarioTransmision-pe"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAyuda" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-light bg-info">
+                    <h5 class="modal-title" id="my-modal-title">Ayuda y funcionamiento</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h5 class="card-title font-weight-bold">Icono de oyentes</h5>
+                            <div class="numberListeners" id="btnExampleListeners">
+                                <span class="badge badge-pill badge-danger" id="nel">2</span>
+                                <span class="icofont-audio" id="spanListenerIco"></span>
+                            </div>
+                            <p>Este icono nos dice la cantidad de radio escuchas que hay en este momento</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title font-weight-bold">Titulo de lo que se esta reproduciendo</h5>
+                            <p>
+                                En la parte superior del reproductor justo arriba del logotipo de la radio aparece un titulo, este nos dice que alabanza se esta reproduciendo en este momento, o quien esta transmitiendo en vivo
+                            </p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title font-weight-bold">Diferencias entre Pause y Stop</h5>
+                            <button class="btn btn btn-outline-primary p-1" type="button">
+                                <span class="icofont-pause span-controls"></span>
+                                <span class="span-data">Pausar</span>
+                            </button>
+                            <p>
+                                Este boton solo pausa la reproduccion de la radio, en cuanto se de click en Reproducir(Boton de play), la transmision seguira desde el punto donde se dio Pause
+                            </p>
+                            <button class="btn btn btn-outline-primary p-1" type="button">
+                                <span class="icofont-stop span-controls"></span>
+                                <span class="span-data">Detener</span>
+                            </button>
+                            <p>
+                                Este boton a diferencia de Pausar, detiene la transmision por completo, en cuanto se de click nuevamente en Reproducir(Boton de play), la transmision estara actualizada en tiempo real
+                            </p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title font-weight-bold">Estado de la tranmision</h5>
+                            <span class="icofont-toggle-off span-status span-status-example" style="color: #76ff03;"></span>
+                            <p>
+                                Este icono nos dice que la transmision esta activa
+                            </p>
+                            <span class="icofont-toggle-off span-status span-status-example" style="color: #7f0000;"></span>
+                            <p>
+                                Este icono nos dice que la transmision esta apagada
+                            </p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title font-weight-bold">¿Por que puedo escuchar una alabanza aunque la transmision esta inactiva</h5>
+                            <p>
+                                Primero de debe aclarar lo siguiente:
+                                <br>
+                                1.- Si la alabanza que se esta reproduciendo es "Grupo el rapto - Tres etapas.mp3"
+                                Se debe a que, para que tenga una mejor experiencia de usuario esta alabanza simpre esta disponible en el momento que no haya transmision de la radiofusora
+                                <br>
+                                <br>
+                                
+                                2.- Si lo que escucha parece ser la radio en vivo, pero se muestran en los datos de transmision que esta desactivada, se debe a problemas con el servidor de radio y si fuera posible haganoslo saber para poder dar pronta solucion.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="page-footer font-small bg-dark text-white pt-4 mt-5">
+        <ul class="list-unstyled list-inline text-center">
+            <li class="list-inline-item" style="display: block;">
+                Contactos de la radio
+            </li>
+            <li class="list-inline-item">
+                <img src="./images/fb.png" alt="" width="30px">
+                <a class="btn-floating btn-fb mx-1 text-white" href="https://web.facebook.com/Radio-Santidad-1025-FM-100172542015522" target="_blank">
+                    Radio Santidad / Facebook
+                </a>
+            </li>
+            |
+            <li class="list-inline-item">
+                <img src="./images/what.png" alt="" width="30px">
+                <a class="text-white" href="https://wa.me/529241337512" target="_blank">+52 9241337512</a>
+            </li>
+            |
+            <li class="list-inline-item">
+                <img src="./images/tel.png" alt="" width="30px">
+                <a class="text-white" href="tel:+529241319920" target="_blank">+52 9241319920 / Llamadas</a>
+            </li>
+        </ul>
+        <hr>
+        <ul class="list-unstyled list-inline text-center">
+            <li class="list-inline-item" style="display: block;">
+                Encargado: David Domínguez Aguirre
+            </li>
+            <li class="list-inline-item">
+                <img src="./images/what.png" alt="" width="30px">
+                <a class="text-white" href="https://wa.me/529241487270" target="_blank">+52  9241487270</a>
+            </li>
+            |
+            <li class="list-inline-item">
+                <img src="./images/tel.png" alt="" width="30px">
+                <a class="text-white" href="tel:+529241487270" target="_blank">+52 9241487270</a>
+            </li>
+        </ul>
+        <hr>
+        <ul class="list-unstyled list-inline text-center">
+            <div class="list-inline-item" style="display: block;">
+                Informacion extra
+            </div>
+            <button class="btn btn-light p-1" type="button" data-toggle="modal" data-target="#modalAyuda"><span class="icofont-question-circle " style="font-size: 35px;"></span>Ayuda</button>
+        </ul>
+        <hr>
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a>Radio Santidad 102.5 FM</a>
+        </div>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
+        var play = false;
+        var statusConexion = true;
+        var playRadio = false;
+        var reproductor = document.getElementById("reproductor");
+        var pistaActual = 1;
+        window.addEventListener("load", function() {
+            document.querySelector(".loading").style.display = "none";
+        });
     </script>
-  </body>
+    <!-- <script src="./js/app.js"></script> -->
+    <script src="./js/index.js"></script>
+    <script src="./js/streamData.js"></script>
+    <script src="./js/navegador.js"></script>
+    <script src="./js/about.js"></script>
+</body>
 </html>
