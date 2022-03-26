@@ -2,6 +2,7 @@ var app = new Vue({
     el: '#app',
     data() {
         return {
+            range: 100,
             volumeActual: 1,
             isLoadSource: false,
             loadedPage: false,

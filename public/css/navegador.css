@@ -1,6 +1,7 @@
 body {
     margin: 0px;
     padding: 0px;
+    background: #000000;
 }
 
 header{
@@ -12,6 +13,11 @@ header{
     color: rgb(255, 255, 255);
     border-bottom:2px solid rgb(255, 255, 255); 
     width:100%;
+    z-index: 3;
+}
+.page-footer {
+    position: relative;
+    z-index: 3;
 }
 
 /* .logo_innova{

@@ -1,7 +1,8 @@
 $(document).ready(function() {
-    let volumenActual = 1;
+    let volumenActual = 100;
     let isLoadSource = false;
-    var progress = document.getElementById("progress");
+    var controlVolume = document.getElementById("controlVolume");
+    var textVolumeActual = document.getElementById("volumeActual");
 
     document.getElementById("cont-pause").style.display = "none";
     document.getElementById("cont-stop").style.display = "none";
@@ -12,18 +13,6 @@ $(document).ready(function() {
         document.getElementById("cont-play").style.display = "inline-block";
         play = false;
     }, false);
-
-    const setVolumenBarrMovil = function(volumen) {
-        const barras = document.querySelectorAll(".barVolume");
-        for (let x = 0; x < barras.length; x++) {
-            barras[x].classList.remove("barActiveVolume");
-        }
-
-        for (let index = 1; index <= volumen; index++) {
-            document.querySelector(".bv" + index).classList.add("barActiveVolume");
-        }
-    }
-    setVolumenBarrMovil(10);
 
     document.getElementById("cont-play").addEventListener("click", function () {
         document.getElementById("cont-play").style.display = "none";
@@ -62,38 +51,28 @@ $(document).ready(function() {
         reproductor.src = "";
         playRadio = play = isLoadSource = false;
     });
-    
-    document.getElementById("sub-vol").addEventListener("click", function () {
-        if (reproductor.volume <= 0.9) {
-            reproductor.volume += 0.1;
-            volumenActual = reproductor.volume;
-            setVolumenBarrMovil(parseInt(reproductor.volume * 10));
-            progress.style.width = (reproductor.volume * 100) + "%";
-            $("#mute-vol").removeClass('active')
-        }
-    });
 
-    document.getElementById("dis-vol").addEventListener("click", function () {
-        if (reproductor.volume >= 0.2) {
-            reproductor.volume -= 0.1;
-            volumenActual = reproductor.volume;
-        } else {
-            reproductor.volume = 0.0;
-            $("#mute-vol").addClass('active')
-        }
-        setVolumenBarrMovil(parseInt(reproductor.volume * 10));
-        progress.style.width = (reproductor.volume * 100) + "%";
-    });
+    controlVolume.addEventListener("input", function() {
+        const volumen = controlVolume.value;
+        textVolumeActual.innerHTML = volumen;
+        volumenActual = volumen;
+        reproductor.volume = (volumen / 100)
+        if (volumen == 0) $("#mute-vol").addClass('active');
+        else $("#mute-vol").removeClass('active')
+    }, false);
 
     document.getElementById("mute-vol").addEventListener("click", function () {
         if (reproductor.volume > 0) {
             reproductor.volume = 0.0;
-            $("#mute-vol").addClass('active')
+            $("#span-mute").removeClass('icofont-volume-up');
+            $("#span-mute").addClass('icofont-ui-mute');
         } else {
-            reproductor.volume = volumenActual;
-            $("#mute-vol").removeClass('active')
+            textVolumeActual.innerHTML = volumenActual;
+            reproductor.volume = (volumenActual / 100);
+            $("#span-mute").removeClass('icofont-ui-mute');
+            $("#span-mute").addClass('icofont-volume-up');
         }
-        setVolumenBarrMovil(parseInt(reproductor.volume * 10));
-        progress.style.width = (reproductor.volume * 100) + "%";
+        controlVolume.value = reproductor.volume * 100;
+        textVolumeActual.innerHTML = reproductor.volume * 100;
     });
 });

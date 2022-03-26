@@ -12,44 +12,67 @@
   margin-left: calc(50% - 40px);
 }
 
-div#mp3_player{
-  width: 500px;
-  height: 180px;
-  background: #000;
-  padding: 5px;
-  margin: 50px auto;
-}
-
-div#mp3_player > div > audio{
-  width: 500px;
-  background: #000;
-  float: left;
-}
-
-div#mp3_player > canvas {
-  width: 500px;
-  height: 150px;
-  background: #002D3C;
-  float: left;
-}
-
-.container-right {
+.body-reproductor{
   position: relative;
-  float: right;
-  width: 395px;
-  text-align: right;
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+.container-reproductor {
+  position: relative;
+  z-index: 1;
+}
+
+.fondo-radio {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  filter: blur(50px);
+  width: 100%;
+  height: calc(100% + 100px);
+}
+
+#animacion {
+  margin-left: 25%;
+  margin-bottom: 1%;
+  margin-top: 10%;
+  width: 50%;
+  border-radius: 10px;
+}
+
+#titleMusic {
+  color: rgb(136, 255, 0);
+}
+
+.Container-buttons {
+  text-align: center;
+  background: #2632381f;
+}
+
+#cont-pause, #cont-play, #cont-stop, #mute-vol {
+  color: rgb(0, 195, 255);
 }
 
 .span-controls {
   font-size: 35px; 
 }
 
+#status-conexion-text {
+  color: #ffffff;
+  margin-left: 80px;
+  margin-top: 10px;
+  font-size: large;
+  font-weight: bold;
+}
+
 .span-status{
   font-size: 75px;
   position: absolute;
-  right: 5px;
+  left: 0px;
   top: -13px;
   height: 10px;
+  color: #fff;
 }
 
 .span-status-example {
@@ -91,63 +114,8 @@ div#mp3_player > canvas {
   border: 2px solid #ffffff;
 }
 
-.volumeMovil {
-  position: absolute;
-  z-index: 6;
-  height: 110px;
-  width: 35px;
-  border-radius: 5px;
-  background: #263238;
-  top: -120px;
-  right: -7px;
-  visibility: hidden;
-}
-
-.barVolume {
-  width: 25px;
-  height: 5px;
-  margin: 5px 0px 0px 5px;
-  background: #455a64;
-  border-radius: 2px;
-  border: 1px solid #718792;
-}
-
-.barActiveVolume {
-  background: #76ff03;
-  border: 0px solid #000000;
-}
-
-.bv9 {width: 23px; margin-left: 7px;}
-.bv8 {width: 21px; margin-left: 9px;}
-.bv7 {width: 19px; margin-left: 11px;}
-.bv6 {width: 17px; margin-left: 13px;}
-.bv5 {width: 15px; margin-left: 15px;}
-.bv4 {width: 13px; margin-left: 17px;}
-.bv3 {width: 11px; margin-left: 19px;}
-.bv2 {width: 9px; margin-left: 21px;}
-.bv1 {width: 7px; margin-left: 23px;}
-
-@media screen and (max-width: 767px) {
-  #cont-progress {
-    position: fixed;
-    visibility: hidden;
-  }
-
-  .volumeMovil {
-    visibility: visible;
-  }
-
+@media screen and (max-width: 500px) {
   .span-data {
     display: none;
-  }
-
-  .container-right {
-    width: 145px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .span-controls {
-    font-size: 30px; 
   }
 }
